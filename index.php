@@ -20,9 +20,21 @@ if (isset($_GET['load'])) {
 	$url = $_GET['url'];
 	$local = getcwd() . "/upload_file/text.xml";
 	$x = file_put_contents($local, file_get_contents($url),LIBXML_PARSEHUGE);
+
 	$sxml = simplexml_load_file($local);
 
+
+
 	if($sxml){
+
+		foreach ($sxml->shop->categories->category as $category) {
+			$idParentID[""+ $category['id'] +""] = (string)$category['parentId'];
+		}
+
+		foreach ($sxml->shop->categories->category as $category) {
+			$idNameCategory[""+ $category['id'] +""] = (string)$category;
+		}
+
 		$tab = "\t";
 		$enter = "\n";
 		$z = "";
@@ -34,17 +46,24 @@ if (isset($_GET['load'])) {
 					 . $offer->categoryId . $tab
 					 . $offer->name . $tab
 					 . $offer->description . $tab
-					 . $sxml->shop->categories->category[0]
+					 . $idNameCategory["".$offer->categoryId.""] . $tab
+					 . $idParentID["".$offer->categoryId.""]
 					 . $enter;
 			$z .= $mystring; 
 		}
-		file_put_contents($local2, $z);
+		if (file_put_contents($local2, $z)) {
+			echo "все хорошо";
+		} else {
+			echo "все плохо";
+		}
+		
 	}
 }
 
-echo "<pre>";
-print_r($sxml);
-echo "</pre>";
+
+//echo "<pre>";
+//print_r($idNameCategory);
+//echo "</pre>";
 
 //echo phpinfo();
 //chmod("text.txt");
