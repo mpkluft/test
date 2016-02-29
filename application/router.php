@@ -6,34 +6,20 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<?php
+	<div class="wrapper-main">
 
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+		<?php
+		#подключаем представление 
+		require_once "view/view_index.php";
+		#подключаем представление модель и контроллер в соответствии с запросом
+		if($_SERVER['REQUEST_METHOD'] === 'POST'){
+		  require_once "model/classes/class_".$_POST['task'].".php";
+		  require_once "controller/controller_".$_POST['task'].".php";
+		  require_once "view/view_".$_POST['task'].".php";
+		}
 
-require_once "view/view_index.php";
-
-if($_SERVER['REQUEST_METHOD'] === 'GET'){
-
-  require_once "model/classes/class_".$_GET['task'].".php";
-  require_once "controller/controller_".$_GET['task'].".php";
-  require_once "view/view_".$_GET['task'].".php";
-    
-}
-
-$mystr = "Батарейки Duracell LR03-2BL Basic Duracell LR03-2BL Basic - 2 батарейки типа AAA. Они имеют напряжение питания - 1.5 V. Устройство, в котором вы будете использовать данные батарейки, проработает дольше и не подведет вас.";
-
-$reg = "/([A-Za-z0-9.-]{2,})/";
-$res = preg_match_all($reg, $mystr, $found, $order);
-echo "<pre>";
-print_r($found);
-echo "</pre>";
-
-for ($i=0; $i < count($found[0]); $i++) { 
-  $str .= $found[0][$i] . ", ";
-}
-echo $str;
-?>
+		?>
+		<span>Если скрипт не запустится. то сделайте на папку upload_file рекурсивно права 777 </span>
+	</div>
 </body>
 </html>
