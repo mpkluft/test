@@ -34,8 +34,6 @@ class class_task3 extends core_task3{
     return $this->result_parse_xml = simplexml_load_file($this->local_xml);
   }
 
-  public function load_ftp(){}
-
   public function result(){
       $result_parse_xml = $this->result_parse_xml;
       $tab = "\t";
@@ -90,6 +88,29 @@ class class_task3 extends core_task3{
     }
       #создаем результирующий файл text.txt
       return $result_file = file_put_contents($this->local_txt, $result);
+  }
+
+  public function load_ftp(){
+  /*
+  $file = 'somefile.txt';
+  $remote_file = 'readme.txt';
+
+  // установка соединения
+  $conn_id = ftp_connect($ftp_server);
+
+  // проверка имени пользователя и пароля
+  $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+  // загрузка файла 
+  if (ftp_put($conn_id, $remote_file, $file, FTP_ASCII)) {
+   echo "$file успешно загружен на сервер\n";
+  } else {
+   echo "Не удалось загрузить $file на сервер\n";
+  }
+
+  // закрытие соединения
+  ftp_close($conn_id);
+  */
   }
 }
 ?>
